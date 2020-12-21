@@ -8,10 +8,10 @@ import 'react-table/react-table.css';
  
 export default function CustTraList(){
 const [customers, setCustomers] = useState([{firstname:'', lastname:'', links:[{}]}]);
-const [trainingLink, setTrainingLink] = useState([])
+//const [trainingLink, setTrainingLink] = useState([])
 //const [training, setTraining] = useState([{}])
 useEffect (() => fetchData(), []);
-useEffect (() => fetchLink(),);
+
 
 const fetchData = () => {
     fetch('https://customerrest.herokuapp.com/api/customers')
@@ -21,19 +21,15 @@ const fetchData = () => {
 
     };
 
-
-    const fetchLink = () => {
+/*useEffect(()=> {
+    const getLink = () => {
         fetch('https://customerrest.herokuapp.com/api/customers')
         .then(response => response.json())
         .then(data => setTrainingLink(data.content.links))
         
-        console.log(trainingLink)
-    
-        };
+    }});
+*/
 
-const linksArr = customers.links;
-
-console.log(linksArr)
 
 console.log(customers)
 

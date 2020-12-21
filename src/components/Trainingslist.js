@@ -105,7 +105,7 @@ const columns = [
     {
         Header: 'Date',
         accessor: 'date',
-      // Cell: row => moment(row.value).format('D.MM.yyyy hh:mm'),
+        Cell: row => moment(row.value).format('D.MM.yyyy hh:mm'),
        width: 150,
     },
     {

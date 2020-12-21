@@ -10,9 +10,19 @@ import moment from 'moment';
 import 'moment/locale/fi';
 
 
+/* 
+Tähänkin jätin näitä ulos kommentoituja asioita,
+jotta hahmottuu edes osa, mitä kaikkea on tullut kokeiltua.
+Tässä ongelmaksi muodostui, että trainingsList:ssä saan formatoitua ajan,
+mutta tässä en onnistu formatoimaan aikaa enää takaisin, ilman, että
+alkaa muuttamaan aikaa jo siinä vaiheessa, kun käyttäjä sitä syöttää, ja 
+näin ollen käyttäjä ei pysty syöttämään haluamaansa aikaa. Ilmeni myös joukko
+variaatioita tästä erilaisilla kokeiluilla.
+*/
+
 export default function EditTraining (props) {
 const [open, setOpen] = useState(false);
-const [date, setDate]= useState()
+//const [date, setDate]= useState()
 const [training, setTraining] = useState({date:'', duration: '', activity: ''})
 
 const [trainingArr, setTrainingArr]= useState({date:'', duration:'', activity:''})
@@ -37,6 +47,7 @@ const handleInputChange = (e) => {
     
 };
 
+/*
 const handleInputChange2 = (e) => {
   console.log(e.target.value)
   setTraining({...training, [e.target.name]:e.target.value})
@@ -52,10 +63,7 @@ const handleInputChange2 = (e) => {
   console.log(training.date)
   
 };
-
-
-console.log(training)
-console.log(training.date)
+*/
 const upDateTraining = () => {
   
     props.upDateTraining(training, props.training.links[1].href);
@@ -82,7 +90,7 @@ const upDateTraining = () => {
             type='datetime'
             value={training.date}
             label="Date"
-            onChange={e => handleInputChange2(e)}
+            onChange={e => handleInputChange(e)}
             fullWidth
           />
            <TextField
