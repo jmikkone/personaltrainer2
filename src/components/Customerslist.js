@@ -63,7 +63,7 @@ const upDateCustomer = (customer, link) => {
 }
 
 const deleteCustomer = (link) => {
-    if(window.confirm('Do you really want to delete the customer?')) {
+    if(window.confirm('Do you really want to delete this customer?')) {
     fetch(link, {method: 'DELETE'})
     .then(res => VerifyDelete())
     .then(res => fetchData())
@@ -105,7 +105,7 @@ const columns = [
     {
         Header: 'Email',
         accessor: 'email',
-        width: 'auto',
+        width: 200,
     },
     {
         Header: 'Phone',
@@ -137,7 +137,7 @@ const columns = [
       anchorOrigin={{vertical:'top', horizontal:'center'}}
       open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Car deleted succesfully!
+          Customer deleted succesfully!
         </Alert>
       </Snackbar>
     </div>

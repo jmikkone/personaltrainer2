@@ -65,7 +65,7 @@ function App() {
             PERSONALTRAINER
           </Typography>
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Customers and Trainings" {...a11yProps(0)} ></Tab>
+          <Tab label="Home" {...a11yProps(0)} ></Tab>
           <Tab label="Customers" {...a11yProps(1)} ></Tab>
           <Tab label="Trainings" {...a11yProps(2)}></Tab>
           <Tab label="Calendar" {...a11yProps(3)}></Tab>

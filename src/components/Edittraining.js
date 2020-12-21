@@ -9,18 +9,22 @@ import CreateIcon from '@material-ui/icons/Create';
 import moment from 'moment';
 import 'moment/locale/fi';
 
+
 export default function EditTraining (props) {
 const [open, setOpen] = useState(false);
+const [date, setDate]= useState()
+const [training, setTraining] = useState({date:'', duration: '', activity: ''})
 
-const [training, setTraining] = useState({date: '', duration: '', activity: ''})
+const [trainingArr, setTrainingArr]= useState({date:'', duration:'', activity:''})
 
 const handleClickOpen = () => {
     console.log(props.training.date)
-    setTraining({date: props.training.date, duration: props.training.duration, activity: props.training.activity})
-   const date = moment(props.training.date).format('l, LT')
-   setTraining({...training, date:date})
+    const date = moment(props.training.date).format('D.MM.yyyy h:mm')
+    setTraining({date:date, duration: props.training.duration, activity: props.training.activity})
+  
+ console.log(training.date)
 
-   console.log(date)
+   
     setOpen(true);
 };
 
@@ -29,15 +33,38 @@ const handleClose = () => {
 };
 
 const handleInputChange = (e) => {
-    setTraining({...training, [e.target.name]:e.target.value})
+    setTrainingArr({...trainingArr, [e.target.name]:e.target.value})
+    
 };
 
+const handleInputChange2 = (e) => {
+  console.log(e.target.value)
+  setTraining({...training, [e.target.name]:e.target.value})
+  setDate(moment(e.target.value, 'D.MM.yyyy hh:mm').toISOString())
+
+  setTrainingArr({...trainingArr, [e.target.name]:date})
+ 
+  //setTraining({...training, [e.target.name]:e.target.value})
+  //const dt= moment(training.date, "D.MM.yyy h:mm").toISOString();
+  
+  //setTraining({...training, date:dt})
+  //console.log(dt)
+  console.log(training.date)
+  
+};
+
+
+console.log(training)
+console.log(training.date)
 const upDateTraining = () => {
+  
     props.upDateTraining(training, props.training.links[1].href);
     handleClose(); 
 
     console.log(training, props.training.links[1].href)
+    
 };
+
 
   return (
     <div>
@@ -51,10 +78,11 @@ const upDateTraining = () => {
             autoFocus
             margin="dense"
             name='date'
-            format={moment(training.date).format('l, LT')}
+            placeholder='D.MM.YYYY h:mm'
+            type='datetime'
             value={training.date}
             label="Date"
-            onChange={e => handleInputChange(e)}
+            onChange={e => handleInputChange2(e)}
             fullWidth
           />
            <TextField

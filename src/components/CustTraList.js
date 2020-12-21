@@ -1,28 +1,62 @@
 
 
+
 import React, {useState, useEffect} from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
-  
-
+ 
 export default function CustTraList(){
 const [customers, setCustomers] = useState([{firstname:'', lastname:'', links:[{}]}]);
-//const [link, setLink] = useState([{}])
-//const [obj, setObj] = useState([{}]);
-
+const [trainingLink, setTrainingLink] = useState([])
+//const [training, setTraining] = useState([{}])
 useEffect (() => fetchData(), []);
+useEffect (() => fetchLink(),);
 
 const fetchData = () => {
     fetch('https://customerrest.herokuapp.com/api/customers')
     .then(response => response.json())
     .then(data => setCustomers(data.content))
+    //.then(data  => setTrainingLink(data.content.links[2].href))
 
-}
+    };
 
 
+    const fetchLink = () => {
+        fetch('https://customerrest.herokuapp.com/api/customers')
+        .then(response => response.json())
+        .then(data => setTrainingLink(data.content.links))
+        
+        console.log(trainingLink)
+    
+        };
 
-console.log(customers[0].links[2].href)
+const linksArr = customers.links;
+
+console.log(linksArr)
+
+console.log(customers)
+
+/* 
+Ajatuksena mulla on tässä saada asiakkaan trainings endpoint linkki ulos,
+ja suorittaa haku toiminto sillä linkillä ja tallentaa sen haun tulokset
+omaan statementtiinsä, josta ne voisi listata. Mutta ongelmaksi muodostui
+kun en saa käsiteltyä json dataa oikein, että saisin sen linkin ulos.
+Jostain syystä sarake sen osaa tuosta customers:ista hakea, mutta
+kun yitän samaa taulukon ulkopuolella, niin tulos on parhaimmillaankin
+"undifined". Olen tarkoituksellisesti jättänyt näitä kommentteja,
+jos se hahmottaisi opettajallekin mitä kaikkea olen yritellyt,
+vaikka tässä näkyykin yrittelyistä vain pieni osa.
+*/
+/*
+ useEffect(() => {
+    fetch(`${customers.links[2].href}`)
+    .then(response => response.json())
+    .then(res => setTraining(res.content))
+});
+
+console.log(training) */
+//console.log(customers[0].links[2].href)
  //tällä saan ulos linkin, mutta vain nollannesta paikasta.
 
 
@@ -38,7 +72,9 @@ const getData = () => {
 En ymmärrä mikä menee väärin. Antaa herjan 
 'cannot read property '2' of undefined', kun yritän saada 
 linkin ulos content.links[2].href, olen yrittänyt myös customers.links[2].href,
-mutta kun laitan column accessoriksi links[2].href, niin saan linkin.
+mutta kun laitan column accessoriksi links[2].href, niin saan linkin. 
+(Tämä trainings column on vain kokeilun vuoksi, ei ole tarkoitus, että näkyy
+lopullisessa versiossa käyttäjälle linkki).
 
 console.log(link)
 
@@ -79,8 +115,11 @@ const columns = [
         accessor: 'links[2].href',
         width: 'auto',
        
+       
     },
     ]
+ 
+
     return (
     <div >
       

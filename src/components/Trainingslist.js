@@ -16,19 +16,19 @@ function Alert(props) {
   
 
 export default function Trainingslist(){
-const [trainings, setTrainings] = useState([{date: '', duration:'', activity: '', links:[{}]}]);
-
+const [trainings, setTrainings] = useState([{date: '', duration:'', activity: '', customer:''}]);
 const [open, setOpen] = useState(false);
+
 useEffect (() => fetchData() , []);
 
 const fetchData = () => {
-fetch('https://customerrest.herokuapp.com/api/trainings')
+fetch('https://customerrest.herokuapp.com/gettrainings')
 .then(response => response.json())
-.then(data => setTrainings(data.content))
+.then(data => setTrainings(data))
 }
 
 
-console.log(trainings)
+console.log(trainings);
 
 const VerifyDelete = () => {
      
@@ -39,13 +39,19 @@ const handleClose = () => {
     setOpen(false)
 }
 
-const saveTraining = (training) => {
+const saveTraining = (training, customer) => {
+    
     fetch('https://customerrest.herokuapp.com/api/trainings', {
         method: 'POST',
         headers: {
             'Content-type':'application/json'
         },
-        body:JSON.stringify(training)
+        body:{
+            "date": `${()=>moment(training.date).toISOString}`,
+            "duration": `${JSON.stringify(training.duration)}`,
+            "activity": `${JSON.stringify(training.activity)}`,
+            "customer": `${JSON.stringify()}`
+        }
 })
     .then(res => fetchData())
     .catch(err => console.error(err))
@@ -54,6 +60,7 @@ const saveTraining = (training) => {
 
 
 const upDateTraining = (training, link) => {
+    
     fetch(link, {
         method: 'PUT',
         headers: {
@@ -98,23 +105,33 @@ const columns = [
     {
         Header: 'Date',
         accessor: 'date',
-       Cell: row => moment(row.value).format('l, LT'),
-       width: 'auto',
+      // Cell: row => moment(row.value).format('D.MM.yyyy hh:mm'),
+       width: 150,
     },
     {
         Header: 'Duration',
         accessor: 'duration',
-        width: 'auto',
+        width: 50,
     },
     {
         Header: 'Activity',
         accessor: 'activity',
         width: 'auto',
     },
+    {
+        Header: 'Customer first name',
+        accessor: 'customer.firstname',
+        width: 'auto',
+    },
+    {
+        Header: 'Customer last name',
+        accessor: 'customer.lastname',
+        width: 'auto',
+    },
     
-    
-   
 ]
+   
+
     return (
     <div >
       <AddTraining saveTraining={saveTraining}/>
